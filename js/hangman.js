@@ -7,18 +7,20 @@ const randomWords = ["chair", "tower", "happiness", "sea", "mountains", "wolves"
 let previousWord = "";
 let firstGame = true;
 let random = "";
-const button = document.querySelector("#newgame");
+const button = document.querySelectorAll(".newgame");
 const charsList = document.querySelector("#chars");
 let x;
 const hangman = document.querySelector("#hangman svg");
 const hangmanPart = [...hangman.children];
 let partsOfHangman = 0;
 const hangmanBody = hangman.querySelector("#body");
+const victory = document.querySelector("#victory");
 
 let wordArray;
-let duplicateArray
+let duplicateArray;
+let win = 0;
 
-// random word from array of words
+// random word from array of wordsw
 function randomWord(){
 	const wordsNumber = randomWords.length;
 	const index = Math.floor(Math.random() * wordsNumber);
@@ -42,7 +44,6 @@ function setWord(newword){
 	const list = chars.map(generateHTML).join('');
 	charsList.innerHTML = list;
 	x = newword;	
-	//console.log(x);
 	wordArray = x.split('');
 	duplicateArray = [...wordArray];
 }
@@ -71,22 +72,24 @@ function newGame(){
 	hangmanPart.map( part => part.style.opacity = 0);
 	partsOfHangman = 0;
 	hangmanBody.classList.remove("fall");
+	win = 0;
+	victory.classList.remove("winner");
 }
 
 // init game
 newGame();
 
 // add event listeners
-button.addEventListener("click", newGame);
-
-
+button.forEach(function(btn){
+	btn.addEventListener("click", newGame);
+});
 
 
 
 /* 
 	GUESS PROCESS - if char is correct show it in the right place, otherwise draw a hangman
 */
-let win;
+
 // check if char is in the word on key down
 function checkChar(e){
 	// take array of chars before and after check if char is in the word 
@@ -109,6 +112,13 @@ function checkChar(e){
 	}
 	// reset after array for new comparison
 	duplicateArray = [...wordArray];
+	// console.log(win);
+	// console.log(before);
+	if(win === before){
+		setTimeout(function(){
+				victory.classList.add("winner");
+			}, 700);
+	}
 }
 
 // loop through every char
@@ -118,20 +128,9 @@ function check(v, i, k){
 		const charField = charsList.children;
 		charField[i].innerHTML = v;
 		duplicateArray.splice(i,1);
-	}
-}
-
-function winner(){
-	console.log("win?");
-	win = [...charsList.children];
-	for(var ch=0; ch < win.length; ch++){
-		//console.log(win[ch].children[0].innerHTML);
-		if(win[ch].children[0].innerHTML !== "_"){
-			console.log("you won!");
-		}
+		win++;
 	}
 }
 
 // add event listeners
 window.addEventListener("keydown", checkChar);
-window.addEventListener("keyup", winner);
