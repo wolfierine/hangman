@@ -71,7 +71,8 @@ line {
 	transition: .3s;
 }
 #body.fall{
-	transform: translateY(30%);
+	-webkit-transform: translateY(30%);
+	        transform: translateY(30%);
 	transition: 1.5s;
 }
 
@@ -92,6 +93,8 @@ line {
 	display: none;
 }
 #victory .newgame{
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
 	width: fit-content;
 	margin: 30px auto;
 	display: inline-block;
@@ -101,20 +104,27 @@ line {
 }
 @supports (display: gridd){
 	#game{
+		display: -ms-grid;
 		display: grid;
 		min-height: 100vh;
-		grid-template-rows: max-content minmax(100px, 370px) max-content 1fr max-content;
+		-ms-grid-rows: max-content minmax(100px, 370px) max-content 1fr max-content;
+		    grid-template-rows: -webkit-max-content minmax(100px, 370px) -webkit-max-content 1fr -webkit-max-content;
+		    grid-template-rows: max-content minmax(100px, 370px) max-content 1fr max-content;
 	}
 	.game-title{
+		-ms-grid-row: 1;
 		grid-row: 1;
 	}
 	#hangman{
+		-ms-grid-row: 2;
 		grid-row: 2;
 	}
 	#chars{
+		-ms-grid-row: 3;
 		grid-row: 3;
 	}
 	#chars + .newgame{
+		-ms-grid-row: 5;
 		grid-row: 5;	
 	}
 }
