@@ -7,7 +7,6 @@ body{
 	color: #fff;
 	font-family: 'Raleway', sans-serif;
 	text-align: center;
-	//min-height: 100vh;
 }
 
 /* game title above */
@@ -33,6 +32,12 @@ body{
 }
 .newgame:hover{
 	background-color: #ffd863;
+}
+#chars + .newgame{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
 }
 
 /* word fields */
@@ -70,6 +75,7 @@ line {
 	transition: 1.5s;
 }
 
+/* win */
 #victory{
 	position: fixed;
 	top: 0;
@@ -93,10 +99,10 @@ line {
 #victory.winner{
 	display: flex;
 }
-@supports (display: grid){
+@supports (display: gridd){
 	#game{
 		display: grid;
-		height: 100vh;
+		min-height: 100vh;
 		grid-template-rows: max-content minmax(100px, 370px) max-content 1fr max-content;
 	}
 	.game-title{
